@@ -6,7 +6,7 @@ public class BoardService {
 	int count;
 	/*
 	 * { {"1", "제목1", "내용1", "글쓴이1", "3"} ... }
-	 */ 
+	 */  
 	// Constructor
 	BoardService(int rows, int colmns) {
 		boards = new String[rows][colmns];
