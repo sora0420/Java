@@ -2,9 +2,7 @@ package Project01;
 
 import java.util.Scanner;
 
-public class source_code { 
-	// 번호 외의 문자 있으면 예외처리
-	// 읽기, 수정, 삭제 없는 예외처리
+public class source_code2 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -14,7 +12,7 @@ public class source_code {
 		boolean flag = true;
 		String title, content, writer;
 		Scanner scanner = new Scanner(System.in);
-		int num = 0, no = 1, view = 0, del = 0, back = 0;
+		int num = 0, no = 0, view = 0, del = 0, count = 0;
 		boolean confirm = false;
 
 		while (flag) {
@@ -32,39 +30,36 @@ public class source_code {
 				System.out.println("------------------------------------------------------------------------------");
 				System.out.println("\t번호\t\t제목\t\t내용\t\t글쓴이\t\t조회수");
 				System.out.println("------------------------------------------------------------------------------");
-				if (boardArray[1][0] == null && boardArray[2][0] == null) {
+				if (boardArray[0][0] == null && boardArray[1][0] == null) {
 					System.out.println("내용이 없습니다.");
 					break;
 				}
-				
-				String[] tempa;
-				System.arraycopy(boardArray, 0, tempArray, 0, boardArray.length);
-				for (int i = 1; i < boardArray.length-1; i++) {
-					for (int j = i + 1; j < boardArray.length; j++) {
-						if (tempArray[j][0] != null && boardArray[i][0] != null) {
-							if (Integer.parseInt(tempArray[i][0]) < Integer.parseInt(tempArray[j][0])) {
-								tempa = tempArray[j];
-								tempArray[j] = tempArray[i];
-								tempArray[i] = tempa;
-							}
-						}
+
+				int back = no - 1;
+				if (boardArray[back] != null) {
+					for (int i = 0; i < no; i++) {
+						tempArray[i] = boardArray[back];
+						back--;
 					}
 				}
 
-				for (int i = 1; i < no; i++) {
-					for (int j = 0; j < boardArray[no].length; j++) {
-						if (boardArray[i][j] != null) {
-							System.out.print("\t" + tempArray[i][j] + "\t");
-						}
-					}
-					if (boardArray[i][0] != null)
+				int shownum = 0;
+				for (int i = 0; i < no; i++) {
+					if (boardArray[i] != null) {
+						shownum = Integer.parseInt(tempArray[i][0]);
 						System.out.println();
+						System.out.print("\t" + (shownum + 1) + "\t\t" + tempArray[i][1] + "\t\t" + tempArray[i][2]
+								+ "\t\t" + tempArray[i][3] + "\t\t" + tempArray[i][4] + "\t");
+					} else {
+						System.out.print("\t" + tempArray[i][0] + "\t\t" + tempArray[i][1] + "\t\t" + tempArray[i][2]
+								+ "\t\t" + tempArray[i][3] + "\t\t" + tempArray[i][4] + "\t");
+					}
 				}
 				break;
 			case 2:
 				if (confirm == true) {
 					for (int j = 0; j < boardArray[del].length; j++) {
-						boardArray[del][j] = String.valueOf(no);
+						boardArray[del][j] = String.valueOf(del);
 						System.out.print("제목 : ");
 						boardArray[del][j + 1] = title = scanner.nextLine();
 						System.out.print("내용 : ");
@@ -73,7 +68,7 @@ public class source_code {
 						boardArray[del][j + 3] = writer = scanner.nextLine();
 						boardArray[del][j + 4] = String.valueOf(view);
 						confirm = false;
-						no++;
+						count++;
 						break;
 					}
 				} else {
@@ -87,7 +82,21 @@ public class source_code {
 						boardArray[no][j + 3] = writer = scanner.nextLine();
 						boardArray[no][j + 4] = String.valueOf(view);
 						no++;
+						count++;
 						break;
+					}
+				}
+				System.out.println("------------------------------------------------------------------------------");
+				System.out.println("\t번호\t\t제목\t\t내용\t\t글쓴이\t\t조회수");
+				System.out.println("------------------------------------------------------------------------------");
+				for (int i = 0; i < no; i++) {
+					System.out.println();
+					for (int j = 0; j < boardArray[no].length; j++) {
+						if (boardArray[i][j] != null) {
+							System.out.print("\t" + boardArray[i][j] + "\t");
+						} else {
+							break;
+						}
 					}
 				}
 				break;
@@ -97,7 +106,7 @@ public class source_code {
 				System.out.print("번호 : ");
 				input = Integer.parseInt(scanner.nextLine());
 
-				for (int i = 1; i < boardArray.length; i++) {
+				for (int i = 0; i < boardArray.length; i++) {
 					if (Integer.parseInt(boardArray[i][0]) == input) {
 						System.out.println("제목 : " + boardArray[i][1]);
 						System.out.println("내용 : " + boardArray[i][2]);
@@ -114,40 +123,32 @@ public class source_code {
 				input = 0;
 				System.out.print("번호 : ");
 				input = Integer.parseInt(scanner.nextLine());
-				for (int i = 1; i < boardArray.length; i++) {
+				for (int i = 0; i < boardArray.length; i++) {
 					if (Integer.parseInt(boardArray[i][0]) == input) {
 						System.out.println("기존제목 : " + boardArray[i][1]);
 						System.out.print("수정제목 : ");
-						title = scanner.nextLine();
-						System.out.println(title);
-						if (title != "") {
-							boardArray[i][1] = title;
-						}
+						boardArray[i][1] = title = scanner.nextLine();
 						System.out.println("기존내용 : " + boardArray[i][2]);
 						System.out.print("수정내용 : ");
-						content = scanner.nextLine();
-						if (content != "") {
-							boardArray[i][2] = content;
-						}
+						boardArray[i][2] = content = scanner.nextLine();
 						break;
 					}
 				}
-
 				break;
 			case 5:
 				del = 0;
 				System.out.print("번호 : ");
 				del = Integer.parseInt(scanner.nextLine());
-				for (int i = 1; i < boardArray.length; i++) {
+				for (int i = 0; i < boardArray.length; i++) {
 					if (Integer.parseInt(boardArray[i][0]) == del) {
 						for (int j = 0; j < boardArray[i].length; j++) {
 							boardArray[i][j] = null;
 						}
 						confirm = true;
+						count--;
 						break;
 					}
 				}
-
 				break;
 			case 6:
 				flag = false;
