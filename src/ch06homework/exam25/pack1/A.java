@@ -1,4 +1,4 @@
-package ch06homework.exam25;
+package ch06homework.exam25.pack1;
 
 public class A {
 	public int field1;
