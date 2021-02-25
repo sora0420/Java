@@ -20,6 +20,9 @@ public class Example3 {
 		
 		System.out.println(var1 == var2); //1,2번 false 번지비교 / 값의 범위에 따라서 다른 값
 		System.out.println(var1.equals(var2)); //true //warpper 클래스는 이거씀
+		
+		
+		
 	}
 
 }
